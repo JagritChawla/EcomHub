@@ -1,5 +1,19 @@
+import { Footer } from "./components/Footer"
+import { Header } from "./components/Header"
+import {Container } from "react-bootstrap"
+import { AllRoutes } from "./routes/AllRoutes"
 export const App = () => {
   return (
-    <h1>Welcome to E-commerce</h1>
+    <>
+    <Header />
+    <main className="py-3">
+      <Container>
+        <AllRoutes />
+        
+      </Container>
+    </main>
+    <Footer />
+    
+    </>
   )
 }
