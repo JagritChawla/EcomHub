@@ -1,0 +1,24 @@
+define the schema of the collection here 
+
+Separation of Concerns:
+    Helps organize different parts of the application.
+    Keeps data-related code separate from other components.
+
+Schema Definition:
+    Defines the structure and properties of data models.
+    Specifies types, validations, and constraints.
+
+Encapsulation:
+    Allows grouping related functionality together.
+    Each model file can contain schema and related methods.
+
+Reusability:
+    Models can be easily reused across different parts of the application.
+    Enhances modularity and code reuse.
+
+Clarity and Readability:
+    Improves the understanding of the project's structure.
+    Makes it easier for developers to navigate and maintain the codebase.
+
+
+Creating a models folder in the backend project helps in organizing, maintaining, and reusing data-related code effectively.
