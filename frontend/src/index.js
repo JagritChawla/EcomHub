@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { Provider } from 'react-redux';
 import store from './store.js';//redux store
 
@@ -14,9 +15,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+      <PayPalScriptProvider deferLoading={true}>
+        <Router>
+          <App />
+        </Router> 
+      </PayPalScriptProvider>
+      
     </Provider>
 
   </React.StrictMode>
