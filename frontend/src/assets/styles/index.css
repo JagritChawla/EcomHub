@@ -64,3 +64,27 @@ table th {
     height: 50px;
   }
 } */
+
+
+/* copied from chatgpt for card size changes with change in image size
+//jab time milega tab dekhunga
+.product-card {
+  height: 100%;               //Make card fill available height 
+  display: flex;
+  flex-direction: column;     //Stack image + body vertically 
+}
+
+.product-image {
+  height: 50%;                //50% of the card 
+  object-fit: cover;
+  width: 100%;
+}
+
+.product-body {
+  height: 50%;               //50% of the card 
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}  */
+

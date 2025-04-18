@@ -1,13 +1,13 @@
 import React from 'react'
 import { useEffect } from 'react'
 import {Link,useParams} from 'react-router-dom'
-import {Row,Col,ListGroup,Image,Form,Button,Card, ListGroupItem} from 'react-bootstrap'
+import {Row,Col,ListGroup,Image,Button,Card} from 'react-bootstrap'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import {toast} from 'react-toastify'
 import { useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { Loader } from '../components/Loader'
-import { useGetOrderDetailsQuery , usePayOrderMutation, useGetPayPalClientIdQuery } from '../slices/ordersApiSlice'
+import { useGetOrderDetailsQuery , usePayOrderMutation, useGetPayPalClientIdQuery,useDeliverOrderMutation } from '../slices/ordersApiSlice'
 
 
 
@@ -17,6 +17,8 @@ const OrderScreen = () => {
     console.log(order) 
 
     const [payOrder, {isLoading: loadingPay }] = usePayOrderMutation();
+
+    const [deliverOrder, {isLoading: loadingDeliver }] = useDeliverOrderMutation();
 
     const [{ isPending} , paypalDispatch] = usePayPalScriptReducer();
 
@@ -81,6 +83,15 @@ const OrderScreen = () => {
         })
     }
     
+    const deliverOrderHandler = async() => {
+        try {
+            await deliverOrder(orderId);
+            refetch();
+            toast.success('Order Delivered')
+        } catch (err) {
+            toast.error(err?.data?.message || err.message);
+        }
+    }
 
    return isLoading ? <Loader /> : error? <Message variant='danger'></Message> : (
     <>
@@ -174,24 +185,43 @@ const OrderScreen = () => {
                     </Row>
                 </ListGroup.Item>
                 
-                    {!order.isPaid && (
-                        <ListGroup.Item>
-                            {loadingPay && <Loader />}
+                {!order.isPaid && userInfo && userInfo._id === order.user._id && (  //to check if the user is the owner of the order then only show the pay button
 
-                            {isPending ? <Loader/>: (
+                    // {!order.isPaid && ( //it is for when you want to allow admin to pay for the order
+                    
+                    <>
+                    <ListGroup.Item>
+                        <Message> Please pay for your order</Message>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                        {loadingPay && <Loader />}
+
+                        {isPending ? <Loader/>: (
+                            <div>
+                                <Button onClick={ onApproveTest } style={{marginBottom: '10px'}}>
+                                    Test Pay Order
+                                </Button>
                                 <div>
-                                    <Button onClick={ onApproveTest } style={{marginBottom: '10px'}}>
-                                        Test Pay Order
-                                    </Button>
-                                    <div>
-                                        <PayPalButtons createOrder={createOrder} onApprove={onApprove} onError={onError}>
-                                        </PayPalButtons>
-                                    </div>
+                                    <PayPalButtons createOrder={createOrder} onApprove={onApprove} onError={onError}>
+                                    </PayPalButtons>
                                 </div>
-                            )}
-                        </ListGroup.Item>
-                    ) }
-                {/* MARK AS  DELIVERED PLACEHOLDER */}
+                            </div>
+                        )}
+                    </ListGroup.Item>
+                    </>
+                       
+                )}
+
+
+                {loadingDeliver && <Loader />}
+                {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                    <ListGroup.Item>
+                        <Button type='button' className='btn btn-block' onClick={deliverOrderHandler}>
+                            Mark as Delivered
+                        </Button>
+                    </ListGroup.Item>
+                )}
+
             </ListGroup>
         </Card>
         </Col>

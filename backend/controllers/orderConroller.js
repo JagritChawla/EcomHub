@@ -35,7 +35,7 @@ const addOrderItems = asyncHandler(async (req,res)=>{
 //@route   Get /api/orders/myorders
 //@acccess Private
 const getMyOrders = asyncHandler(async (req,res)=>{
-    const orders = await Order.find({user: req.user._id});
+    const orders = await Order.find({user: req.user._id}); //Find all documents where the user field (in mongodb collection) equals the current user's _id (req.user is object added by jwt).
     res.status(200).json(orders);
 });
 
@@ -82,14 +82,27 @@ const updateOrderToPaid = asyncHandler(async (req,res)=>{
 //@route   GET /api/orders/:id/deliver
 //@acccess Private/Admin
 const updateorderToDelivered = asyncHandler(async (req,res)=>{
-    res.send('update order to delivered')
+    const order = await Order.findById(req.params.id);
+
+    if(order){
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+
+        const updatedOrder = await order.save();
+
+        res.status(200).json(updatedOrder);
+    }else{
+        res.status(404);
+        throw new Error('Order not found');
+    }
 });
 
 //@desc    Get all order
 //@route   PUT /api/orders/:id/pay
 //@acccess Private/Admin
 const getOrders = asyncHandler(async (req,res)=>{
-    res.send('get all orders')
+    const orders = await Order.find({}).populate('user','id name');
+    res.status(200).json(orders);
 });
 
 export{
