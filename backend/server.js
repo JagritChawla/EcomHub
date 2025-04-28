@@ -26,9 +26,7 @@ app.use(express.urlencoded({extended: true}))
 //cookie parser middleware
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send('Hello jai mata di World!');
-});
+
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
@@ -42,6 +40,19 @@ app.get('/api/config/paypal', (req,res) =>
 
 const __dirname = path.resolve(); //set __dirname to current directory
 app.use('/uploads', express.static(path.join(__dirname, '/uploads'))); //serve static files from uploads folder
+
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+  );
+}else{
+  app.get('/', (req, res) => {
+    res.send('Hello namaste World!');
+  });
+}
 
 
 app.use(notFound);

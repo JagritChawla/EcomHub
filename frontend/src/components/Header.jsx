@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import {logout} from "../slices/authSlice"
 import logo from "../assets/logo3.png"
+import SearchBox from "./SearchBox"
 export const Header = () => {
 
   const { cartItems } = useSelector((state)=> state.cart); //state.cart - cart is the reducer mentioned in store.js
@@ -41,6 +42,7 @@ export const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
+                      <SearchBox />
                         <LinkContainer to="/cart">
                           <Nav.Link><FaShoppingCart /> Cart
                           {cartItems.length > 0 && (

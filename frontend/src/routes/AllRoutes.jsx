@@ -22,6 +22,9 @@ export const AllRoutes = () => {
   return (
     <Routes>
         <Route path="/" element={<HomeScreen />} ></Route>
+        <Route path="/search/:keyword" element={<HomeScreen />} ></Route>
+        <Route path="/page/:pageNumber" element={<HomeScreen />} ></Route>
+        <Route path="/search/:keyword/page/:pageNumber" element={<HomeScreen />} ></Route>
         <Route path="/products/:id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<CartScreen />}></Route>
         <Route path="/login" element={<LoginScreen />}></Route>
@@ -38,6 +41,7 @@ export const AllRoutes = () => {
         <Route path="" element={<AdminRoute />}>
           <Route path="/admin/orderlist" element={<OrderListScreen />}></Route>
           <Route path="/admin/productlist" element={<ProductListScreen />}></Route>
+          <Route path="/admin/productlist/:pageNumber" element={<ProductListScreen />}></Route>
           <Route path="/admin/product/:id/edit" element={<ProductEditScreen />}></Route>
           <Route path="/admin/userlist" element={<UserListScreen />}></Route>
           <Route path="/admin/user/:id/edit" element={<UserEditScreen />}></Route>

@@ -47,7 +47,7 @@ const ShippingScreen = () => {
                                                                                                     const newValue = e.target.value;
 
                                                                                                     // Allow only alphabets, spaces, and hyphens for city input
-                                                                                                    if (/^[a-zA-Z\s\-]*$/.test(newValue)) {
+                                                                                                    if (/^[a-zA-Z\s-]*$/.test(newValue)) {
                                                                                                     setCity(newValue);
                                                                                                     }
   }}>
@@ -59,7 +59,7 @@ const ShippingScreen = () => {
                 <Form.Label>Postal Code</Form.Label>
                 <Form.Control type="text" placeholder="Enter postal code" value={postalCode } onChange={(e) => {
                                                                                                                 const newValue = e.target.value;
-                                                                                                                if (/^[a-zA-Z0-9\s\-]*$/.test(newValue)) {
+                                                                                                                if (/^[a-zA-Z0-9\s-]*$/.test(newValue)) {
                                                                                                                     setPostalCode(newValue);
                                                                                                                 }
                                                                                                             }}>
@@ -74,7 +74,7 @@ const ShippingScreen = () => {
                                                                                                         const newValue = e.target.value;
 
                                                                                                         // Allow only alphabets, spaces, and hyphens for city input
-                                                                                                        if (/^[a-zA-Z\s\-]*$/.test(newValue)) {
+                                                                                                        if (/^[a-zA-Z\s-]*$/.test(newValue)) {
                                                                                                         setCountry(newValue);
                                                                                                         }
   }}>
